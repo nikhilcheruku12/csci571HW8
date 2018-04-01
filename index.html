@@ -9,6 +9,59 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <style>
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+    </style>
     <script>
 
       function handleRadioButtons() {
@@ -16,15 +69,15 @@
             console.log('enters here');
             if(from[1].checked)
             {
-                document.getElementById('location').removeAttribute('disabled');
-                document.getElementById('location').setAttribute('required', 'required');
+                document.getElementById('pac-input').removeAttribute('disabled');
+                document.getElementById('pac-input').setAttribute('required', 'required');
             }
 
             else
             {
-              document.getElementById('location').setAttribute('disabled', 'disabled');
-              document.getElementById('location').value = "";
-              document.getElementById('location').removeAttribute('required');
+              document.getElementById('pac-input').setAttribute('disabled', 'disabled');
+              document.getElementById('pac-input').value = "";
+              document.getElementById('pac-input').removeAttribute('required');
             }
 
         }
@@ -32,8 +85,43 @@
         function resetResults(){
 
         }
+        function initMap() {
+          var card = document.getElementById('pac-card');
+          var input = document.getElementById('pac-input');
+          var autocomplete = new google.maps.places.Autocomplete(input);
 
-    </script>
+          var infowindow = new google.maps.InfoWindow();
+          var infowindowContent = document.getElementById('infowindow-content');
+          infowindow.setContent(infowindowContent);
+
+
+          autocomplete.addListener('place_changed', function() {
+            infowindow.close();
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+              // User entered the name of a Place that was not suggested and
+              // pressed the Enter key, or the Place Details request failed.
+              window.alert("No details available for input: '" + place.name + "'");
+              return;
+            }
+
+            var address = '';
+            if (place.address_components) {
+              address = [
+                (place.address_components[0] && place.address_components[0].short_name || ''),
+                (place.address_components[1] && place.address_components[1].short_name || ''),
+                (place.address_components[2] && place.address_components[2].short_name || '')
+              ].join(' ');
+            }
+
+            infowindowContent.children['place-icon'].src = place.icon;
+            infowindowContent.children['place-name'].textContent = place.name;
+            infowindowContent.children['place-address'].textContent = address;
+          });
+        }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA83DK_kMZBvZAZ9pYciIFLpuIKNn4BQaY&libraries=places&callback=initMap"
+          async defer></script>
   </head>
   <body>
     <div class="container">
@@ -95,9 +183,13 @@
         <label>From?</label>
         <label><input type="radio" name="from" value="yes" checked onchange="handleRadioButtons()">Current location</label>
         <label><input type="radio" name="from" value="no" onchange="handleRadioButtons()">Other,Please specify:</label>
-        <INPUT name=location id = "location" placeholder="Enter a location:" disabled>
+        <INPUT name=location id = "pac-input" placeholder="Enter a location:" disabled>
       </div>
-
+      <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name"  class="title"></span><br>
+        <span id="place-address"></span>
+      </div>
 
     </fieldset>
     <INPUT type=submit name="submit" value= "Search" disabled> <INPUT type=reset value="Clear" name = "clear" onclick="resetResults();">
