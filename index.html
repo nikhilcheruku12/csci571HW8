@@ -9,11 +9,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <script>
+
+      function handleRadioButtons() {
+            var from = document.getElementsByName('from');
+
+            if(from[1].checked)
+            {
+                document.getElementById('location').removeAttribute('disabled');
+                document.getElementById('location').setAttribute('required', 'required');
+            }
+
+            else
+            {
+              document.getElementById('location').setAttribute('disabled', 'disabled');
+              document.getElementById('location').value = "";
+              document.getElementById('location').removeAttribute('required');
+            }
+
+        }
+
+        function resetResults(){
+
+        }
+
+    </script>
   </head>
   <body>
     <div class="container">
 
-  <h2>Medical Questionnaire</h2>
 
   <form>
 
@@ -21,55 +45,43 @@
       <legend>Travel and Entertainment Search</legend>
 
       <div>
-        <label for="Keyword">Keyword</label>
-        <input type="text" id="Keyword">
+        <label for="keyword">Keyword</label>
+        <input type="text" id="keyword">
       </div>
 
       <div>
-        <label for="distance">Email address</label>
+        <label for="distance">Distance(miles)</label>
         <input type="number" id="distance" placeholder="10">
       </div>
 
-    </fieldset>
-    <fieldset>
 
-      <legend>Pet Info</legend>
 
       <div>
-        <label for="petname">Pet name</label>
-        <input type="text" id="petname" placeholder="Your Pet's name">
-      </div>
-
-      <div>
-        <label for="pettype">Pet type</label>
-        <select id="pettype">
+        <label for="category">Category</label>
+        <select id="category">
           <option>Choose</option>
-          <option value="cat">Dog</option>
-          <option value="cat">Cat</option>
-          <option value="bird">Other</option>
+          <option value="Default">Default</option>
+          <option value="Airport">Airport</option>
+          <option value="Amusement Park">Amusement Park</option>
+          <option value="Aquarium">Aquarium</option>
+          <option value="Art Gallery">Art Gallery</option>
+          <option value="Bakery">Bakery</option>
+          <option value="Bar">Bar</option>
+          <option value="Beauty Salon">Beauty Salon</option>
+          <option value="Bowling Alley">Bowling Alley</option>
         </select>
       </div>
 
       <div>
-        <label for="reasonforvisit">Reason for today's visit</label>
-        <textarea id="reasonforvisit" rows="3"></textarea>
+        <label>From?</label>
+        <label><input type="radio" name="from" value="yes" checked>Current location</label>
+        <label><input type="radio" name="from" value="no">Other,Please specify:</label>
+        <INPUT name=location id = "location" placeholder="Enter a location:">
       </div>
 
-      <div>
-        <label>Has your pet been spayed or neutered?</label>
-        <label><input type="radio" name="spayneut" value="yes" checked> Yes</label>
-        <label><input type="radio" name="spayneut" value="no"> No</label>
-      </div>
-
-      <div>
-        <label>Has the pet had any of the following in the past 30 days</label>
-        <label><input type="checkbox"> Abdominal pain</label>
-        <label><input type="checkbox"> Lack of appetite</label>
-        <label><input type="checkbox"> Weakness</label>
-      </div>
 
     </fieldset>
-    <button type="submit">Submit</button>
+    <INPUT type=submit name="submit" value= "Search" disabled> <INPUT type=reset value="Clear" name = "clear" onclick="resetResults();">
   </form>
 
 
