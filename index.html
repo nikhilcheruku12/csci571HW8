@@ -13,7 +13,7 @@
 
       function handleRadioButtons() {
             var from = document.getElementsByName('from');
-
+            console.log('enters here');
             if(from[1].checked)
             {
                 document.getElementById('location').removeAttribute('disabled');
@@ -59,7 +59,6 @@
       <div>
         <label for="category">Category</label>
         <select id="category">
-          <option>Choose</option>
           <option value="Default">Default</option>
           <option value="Airport">Airport</option>
           <option value="Amusement Park">Amusement Park</option>
@@ -74,9 +73,9 @@
 
       <div>
         <label>From?</label>
-        <label><input type="radio" name="from" value="yes" checked>Current location</label>
-        <label><input type="radio" name="from" value="no">Other,Please specify:</label>
-        <INPUT name=location id = "location" placeholder="Enter a location:">
+        <label><input type="radio" name="from" value="yes" checked onchange="handleRadioButtons()">Current location</label>
+        <label><input type="radio" name="from" value="no" onchange="handleRadioButtons()">Other,Please specify:</label>
+        <INPUT name=location id = "location" placeholder="Enter a location:" disabled>
       </div>
 
 
