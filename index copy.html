@@ -142,84 +142,94 @@
           async defer></script>
   </head>
   <body>
-    <div class="container">
-
-
-  <form class = "needs-validation" novalidate>
-
-    <fieldset>
-      <legend>Travel and Entertainment Search</legend>
-
-      <div>
-        <label for="keyword" required mx-sm-2>Keyword</label>
-        <input type="text" class = "form-control" id="keyword" required>
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
+    <form class="needs-validation" novalidate>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Keyword</label>
+      <input type="text" class="form-control" id="validationCustom01"  required>
+      <div class="invalid-feedback">
+        Please enter a Keyword!
       </div>
-
-      <div>
-        <label for="distance" mx-sm-2>Distance(miles)</label>
-        <input type="number"  id="distance" placeholder="10">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom03">Category</label>
+      <select id="category">
+        <option value="Default">Default</option>
+        <option value="Airport">Airport</option>
+        <option value="Amusement Park">Amusement Park</option>
+        <option value="Aquarium">Aquarium</option>
+        <option value="Art Gallery">Art Gallery</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Bar">Bar</option>
+        <option value="Beauty Salon">Beauty Salon</option>
+        <option value="Bowling Alley">Bowling Alley</option>
+        <option value="Bus Station">Bus Station</option>
+        <option value="Cafe">Cafe</option>
+        <option value="Campground">Campground</option>
+        <option value="Car Rental">Car Rental</option>
+        <option value="Casion">Casino</option>
+        <option value="Lodging">Lodging</option>
+        <option value="Movie Theatre">Movie Theatre</option>
+        <option value="Museum">Museum</option>
+        <option value="Night Club">Night Club</option>
+        <option value="Park">Park</option>
+        <option value="Parking">Parking</option>
+        <option value="Restaurant">Restaurant</option>
+        <option value="Shopping Mall">Shopping Mall</option>
+        <option value="Stadium">Stadium</option>
+        <option value="Subway Station">Subway Station</option>
+        <option value="Taxi Stand">Taxi Stand</option>
+        <option value="Train Station">Train Station</option>
+        <option value="Transition Station">Transition Station</option>
+        <option value="Travel Agency">Travel Agency</option>
+        <option value="Zoo">Zoo</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom04">Distance(miles)</label>
+      <input type="number" class="form-control" id="validationCustom04">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom05">From</label>
+      <label><input mx-sm-2 type="radio" name="from" value="yes" checked onchange="handleRadioButtons()"> Current location</label>
+      <label><input mx-sm-2 type="radio" name="from" value="no" onchange="handleRadioButtons()"> Other,Please specify:</label>
+      <INPUT name=location class="form-control" id = "pac-input" placeholder="Enter a location:" disabled>
+      <div class="invalid-feedback">
+        Please enter a Location!
       </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Search</button>
+  <button class="btn btn-secondary" type="reset" onclick="resetResults();">Clear</button>
+</form>
 
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 
-
-      <div>
-        <label for="category">Category</label>
-        <select id="category">
-          <option value="Default">Default</option>
-          <option value="Airport">Airport</option>
-          <option value="Amusement Park">Amusement Park</option>
-          <option value="Aquarium">Aquarium</option>
-          <option value="Art Gallery">Art Gallery</option>
-          <option value="Bakery">Bakery</option>
-          <option value="Bar">Bar</option>
-          <option value="Beauty Salon">Beauty Salon</option>
-          <option value="Bowling Alley">Bowling Alley</option>
-          <option value="Bus Station">Bus Station</option>
-          <option value="Cafe">Cafe</option>
-          <option value="Campground">Campground</option>
-          <option value="Car Rental">Car Rental</option>
-          <option value="Casion">Casino</option>
-          <option value="Lodging">Lodging</option>
-          <option value="Movie Theatre">Movie Theatre</option>
-          <option value="Museum">Museum</option>
-          <option value="Night Club">Night Club</option>
-          <option value="Park">Park</option>
-          <option value="Parking">Parking</option>
-          <option value="Restaurant">Restaurant</option>
-          <option value="Shopping Mall">Shopping Mall</option>
-          <option value="Stadium">Stadium</option>
-          <option value="Subway Station">Subway Station</option>
-          <option value="Taxi Stand">Taxi Stand</option>
-          <option value="Train Station">Train Station</option>
-          <option value="Transition Station">Transition Station</option>
-          <option value="Travel Agency">Travel Agency</option>
-          <option value="Zoo">Zoo</option>
-        </select>
-      </div>
-
-      <div>
-        <label mx-sm-2>From?</label>
-        <label><input mx-sm-2 type="radio" name="from" value="yes" checked onchange="handleRadioButtons()"> Current location</label>
-        <label><input mx-sm-2 type="radio" name="from" value="no" onchange="handleRadioButtons()"> Other,Please specify:</label>
-        <INPUT name=location id = "pac-input" placeholder="Enter a location:" disabled>
-      </div>
-      <div id="infowindow-content">
-        <img src="" width="16" height="16" id="place-icon">
-        <span id="place-name"  class="title"></span><br>
-        <span id="place-address"></span>
-      </div>
-
-    </fieldset>
-    <INPUT type=submit name="submit" value= "Search" disabled> <INPUT type=reset value="Clear" name = "clear" onclick="resetResults();">
-  </form>
-
-
-  </div><!-- content container -->
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
